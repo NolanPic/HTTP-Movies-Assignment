@@ -23,6 +23,9 @@ export default class SavedList extends Component {
         <div className="home-button">
           <Link to="/">Home</Link>
         </div>
+        <div className="new-button">
+          <Link to="/edit-movie/new">Create movie</Link>
+        </div>
       </div>
     );
   }

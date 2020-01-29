@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../utils';
 
 const EditMovie = props => {
 
     const { id } = useParams();
+    const history = useHistory();
 
     const initialState = {
         title: '',
@@ -17,16 +18,18 @@ const EditMovie = props => {
     const [movie, setMovie] = useState(initialState);
 
     useEffect(() => {
-        axios.get(`${apiUrl}/movies/${id}`)
-            .then(res => {
-                console.log(res);
-                setMovie(res.data);
-            })
-            .catch(err => console.warn(err));
+        if(id !== 'new') {
+            axios.get(`${apiUrl}/movies/${id}`)
+                .then(res => {
+                    console.log(res);
+                    setMovie(res.data);
+                })
+                .catch(err => console.warn(err));
+        }
     }, [id]);
 
     const handleChange = e => {
-        const newValue = e.target.value;
+        let newValue = e.target.value;
 
         if(e.target.name === 'stars') {
             newValue = e.target.value.split(',');
@@ -41,15 +44,27 @@ const EditMovie = props => {
     const handleSubmit = e => {
         e.preventDefault();
 
+        // when editing or saving new movig is complete
+        const saveSuccess = () => {
+            setMovie(initialState);
+            history.push('/');
+        };
+
         if(id === 'new') {
             // adding new movie
-
+            axios.post(`${apiUrl}/movies`, movie)
+                .then(res => {
+                    console.log(res);
+                    saveSuccess();
+                })
+                .catch(err => console.warn(err));
         }
         else {
             // editing existing movie
             axios.put(`${apiUrl}/movies/${id}`, movie)
                 .then(res => {
                     console.log(res);
+                    saveSuccess();
                 })
                 .catch(err => console.warn(err));
         }
@@ -90,7 +105,7 @@ const EditMovie = props => {
                     <input
                         type="text"
                         name="stars"
-                        value={movie.stars.join(', ')}
+                        value={movie.stars.join(',')}
                         onChange={handleChange}
                     />
                 </label>
