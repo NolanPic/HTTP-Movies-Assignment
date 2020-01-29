@@ -69,10 +69,20 @@ body {
 .edit-button {
   position: absolute;
   top: 25px;
-  right: 100px;
+  right: 185px;
   border: 1px solid grey;
   padding: 5px 10px;
   background-color: rgb(128, 194, 193);
+  font-size: 16px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 25px;
+  right: 100px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: rgb(193, 115, 107);
   font-size: 16px;
 }
 
