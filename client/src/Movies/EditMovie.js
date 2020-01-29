@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { apiUrl } from '../utils';
 
 const EditMovie = props => {
+
+    const { id } = useParams();
 
     const initialState = {
         title: '',
@@ -26,6 +31,19 @@ const EditMovie = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        if(id === 'new') {
+            // adding new movie
+
+        }
+        else {
+            // editing existing movie
+            axios.put(`${apiUrl}/movies/${id}`, movie)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => console.warn(err));
+        }
     };
 
     return (
