@@ -16,6 +16,15 @@ const EditMovie = props => {
 
     const [movie, setMovie] = useState(initialState);
 
+    useEffect(() => {
+        axios.get(`${apiUrl}/movies/${id}`)
+            .then(res => {
+                console.log(res);
+                setMovie(res.data);
+            })
+            .catch(err => console.warn(err));
+    }, [id]);
+
     const handleChange = e => {
         const newValue = e.target.value;
 
