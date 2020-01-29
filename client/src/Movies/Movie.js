@@ -32,6 +32,7 @@ export default class Movie extends React.Component {
   };
 
   render() {
+
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
     }
@@ -39,6 +40,7 @@ export default class Movie extends React.Component {
     return (
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
+        <button className="edit-button" onClick={() => this.props.history.push(`/edit-movie/${this.state.movie.id}`)}>Edit</button>
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
