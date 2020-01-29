@@ -5,6 +5,7 @@ body {
   background-color: #f2f2f2;
 }
 
+.card,
 .movie-card {
   background-color: #fff;
   border: 0;
